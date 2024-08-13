@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+
+    <style>
+
+      .box{
+        height: 50px;
+        width: 50px;
+        border: 2px solid;
+        margin: 10px;
+      }
+    </style>
+  </head>
+  <body style="background-color: #212121; color: #fff">
+    <p id="p1">Lorem ipsum dolor sit amet consectetur.</p>
+    <button id="btn">change para</button> <br />
+
+    <img
+      width="200px"
+      id="owl"
+      src="https://images.pexels.com/photos/3532552/pexels-photo-3532552.jpeg?auto=compress&cs=tinysrgb&w=1600&lazy=load"
+      alt=""
+    />
+    <h1>Chage The Color using Mouse Over</h1>
+    <br />
+    <h2>Change The coloe using mouse Out</h2>
+    <br />
+    <button id="toglebtn">Double Click</button>
+    <button id="hover">Mouse Event</button>
+
+    <br /><br />
+    Key Down :<input type="text" name="" id="keydown" />
+    <p>key Down Event : <span id="keydn"></span></p>
+    <br /><br />
+
+    Key Up : <input type="text" name="" id="keyup" />
+    <p>Key Up Event: <span id="keyUp"></span></p>
+
+    <form action="">
+      Name: <input type="text" name="" id="name" />
+      <button id="submit">Submit</button>
+      <p>Enter Name : <span id="Uname"></span></p>
+
+      <br />
+      Select Branch :
+      <select name="" id="branch">
+        <option value="MCA" id="mca">MCA</option>
+        <option value="Mtech">Mtech</option>
+        <option value="MBA">MBA</option>
+        <option value="Mcom">Mcom</option>
+      </select>
+      <br />
+
+      Value : <span id="val"></span>
+    </form>
+<!-- Task 9 -->
+    <ul id="list">
+      <li>List 1</li>
+      <li>List 2</li>
+      <li>List 3</li>
+      <li>List 4</li>
+    </ul>
+
+    <button class="btn-add">Create Box</button>
+    <div class="grid">
+      <div class="box">Hello</div>
+      <div class="box"></div>
+    </div>
+
+
+    <div class="parent"> 
+      <button class="child">Child 1 </button>
+      <button class="child">Child 2</button>
+    </div>
+
+
+    <script>
+      // /basic event handling
+
+      //  Task 1       // Change the paragraph using add Event Listner
+
+      const changeText = function () {
+        document.querySelector("p").innerHTML = "WE CAN CHANGE THE PARAGRAPH";
+      };
+      document.querySelector("button").addEventListener("click", changeText);
+
+      // Task2    // Double click event listner to an image that toggle its visibilty
+
+      document
+        .getElementById("toglebtn")
+        .addEventListener("dblclick", function () {
+          const image = document.getElementById("owl");
+          if (image.style.display === "none") {
+            image.style.display = "block";
+          } else {
+            image.style.display = "none";
+          }
+        });
+
+      // Mouse Events ----------->
+
+      // Task1 : Add Mouse Event listner to change its backround colr
+
+      const btn = document.getElementById("hover");
+      const img = document.querySelector("h1");
+
+      btn.addEventListener("mouseover", () => {
+        img.style.backgroundColor = "yellow";
+      });
+
+      // Task2 : using mouse out change color
+
+      const btn2 = document.getElementById("hover");
+      const h2 = document.querySelector("h2");
+
+      btn2.addEventListener("mouseout", () => {
+        h2.style.backgroundColor = "pink";
+      });
+
+      //  Keyboard Events -------------------->
+
+      // Task 1 : Key Down EVent
+      const down = document.getElementById("keydn");
+      const Up = document.getElementById("keyUp");
+
+      const dwn = document.getElementById("keydown");
+      dwn.addEventListener("keydown", (event) => {
+        console.log(`Key Down Event ${event.key}`);
+        down.textContent = event.key;
+      });
+
+      //  Task 2 : Key Up Event
+      const up = document.getElementById("keyup");
+      up.addEventListener("keyup", (event) => {
+        console.log(`This is Key Up Event ${event.key}`);
+        Up.textContent = event.key;
+      });
+
+      // Form Events -----------------------------------
+
+      // Task 1 :Add submit event listner prevent default submission
+
+      const frm = document.querySelector("form");
+      const submit = document.querySelector("#submit");
+
+      frm.addEventListener("submit", (e) => {
+        e.preventDefault(); //prevent the form from auto submiting
+
+        var userName = document.getElementById("name").value;
+        console.log(userName);
+
+        const add = document.getElementById("Uname");
+        add.textContent = userName;
+      });
+
+      // Task 2: Addd change Eveent listner to a select drop down that display the selected value in para
+
+      const txt = document.getElementById("val");
+      const change = document.querySelector("#branch");
+      change.addEventListener("change", () => {
+        console.log(change.value);
+        txt.textContent = change.value;
+      });
+
+      // Event Delegation --------------------
+
+      // Task 9 : Add click event listner to the list that logs text content of the clicked item using event delegation
+
+      const ul = document.querySelectorAll("li");
+
+      ul.forEach((li) => {
+        li.addEventListener("click", (event) => {
+          console.log(event.target.innerHTML);
+        });
+      });
+
+      // Task 10 :  Event Lisner to a parent elemnt that Dynamically Added Child elemnts:
+
+      const addbx  = document.querySelector('.btn-add');
+      const grid =  document.querySelector('.grid');
+      const box = document.querySelector('.box');
+
+
+      grid.addEventListener('click',(e) => {
+          if(e.target && e.target.classList.contains('box')){
+            console.log('child Clicked : ',e.target.textContent);
+            
+          }
+      })
+
+      addbx.addEventListener('click', () =>{
+        const bx = document.createElement('div');
+        bx.textContent = "New Child"
+        bx.classList.add('box');
+        grid.append(bx)
+      })
+
+
+      const parent = document.querySelector('.parent');
+      const child = document.querySelector('.child');
+     
+      parent.addEventListener('click', (event) => {
+      
+        console.log(event.target.textContent);
+            
+        })
+        
+      
+
+    </script>
+  </body>
+</html>
